@@ -49,7 +49,6 @@ class Attention(nn.Module):
 
         self.affine1 = nn.Linear(self.obs_shape, self.hid_size)
         self.affine2 = nn.Linear(self.hid_size, self.hid_size)
-        self.affine3 = nn.Linear(self.hid_size, self.hid_size)  # 新增的线性层
         self.head = nn.Linear(self.hid_size, self.n_actions)
         self.value_head = nn.Linear(self.hid_size, 1)
         self.attn = nn.MultiheadAttention(self.hid_size, num_heads=self.att_head, batch_first=True)
@@ -58,9 +57,8 @@ class Attention(nn.Module):
         x = self.tanh(self.affine1(x)).unsqueeze(0)
         h, _ = self.attn(x, x, x)
         y = self.tanh(self.affine2(h))
-        z = self.tanh(self.affine3(y))  # 新增的线性层的计算
-        a = F.log_softmax(self.head(z), dim=-1)
-        v = self.value_head(z)
+        a = F.log_softmax(self.head(y), dim=-1)
+        v = self.value_head(y)
         return a, v
 
 

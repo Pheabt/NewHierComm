@@ -64,7 +64,7 @@ def main(args):
 
     #======================================wandb==============================================
     results_path = os.path.join(dirname(abspath(__file__)), "results")
-    args.exp_id = f"{args.env}_{args.map}_{args.agent}_{args.memo}" #_{datetime.datetime.now().strftime('%d_%H_%M')}"
+    args.exp_id = f"{args.env}_{args.map}_{args.agent}_{args.memo}_{args.att_head}" #_{datetime.datetime.now().strftime('%d_%H_%M')}"
 
     if args.use_offline_wandb:
         os.environ['WANDB_MODE'] = 'dryrun'
