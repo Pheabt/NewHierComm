@@ -71,7 +71,7 @@ def main(args):
 
     tags = ['Ming', args.env, args.map, args.agent, args.memo]
 
-    wandb.init(project='JAMMAS', name=args.exp_id, tags=tags, dir=results_path)
+    wandb.init(project='JAMMAS', name=args.exp_id, tags=tags, dir=results_path, entity="mingatum")
     wandb.config.update(args)
 
 
@@ -106,7 +106,7 @@ def main(args):
         exp_config['detach_gap'] = 10
 
     elif args.agent=='ac_att':
-        exp_config['att_head']=1
+        exp_config['att_head']=args.att_head
         exp_config['hid_size']=64
     # elif args.agent in ['tiecomm','tiecomm_g','tiecomm_random','tiecomm_default']:
     #     exp_config['interval']= agent_config['group_interval']
@@ -197,7 +197,7 @@ if __name__ == '__main__':
     parser.add_argument('--map', type=str, default="mpe-large-spread-v1", help='environment map name',
                         choices=['easy','medium','hard','mpe-large-spread-v2','mpe-large-spread-v1','Foraging-easy-v0','Foraging-medium-v0','Foraging-hard-v0'])
     parser.add_argument('--time_limit', type=int, default=50, help='time limit')
-    parser.add_argument('--agent', type=str, default="tiecomm_default", help='algorithm name',
+    parser.add_argument('--agent', type=str, default="ac_mlp", help='algorithm name',
                         choices=['tiecomm','tiecomm_wo_inter','tiecomm_wo_intra','tiecomm_default','ac_att','ac_mlp','gnn','commnet','ic3net','tarmac','magic'])
     # parser.add_argument('--block', type=str, default='no',choices=['no','inter','intra'], help='only works for tiecomm')
     parser.add_argument('--seed', type=int, default=1234, help='random seed')
@@ -206,6 +206,9 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=500, help='batch size')
     parser.add_argument('--total_epoches', type=int, default=1500, help='total number of training epochs')
     parser.add_argument('--n_processes', type=int, default=6, help='number of processes')
+
+    parser.add_argument('--att_head', type=int, default=1, help='number of attention heads')
+
     args = parser.parse_args()
 
     training_begin_time = time.time()
