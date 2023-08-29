@@ -107,7 +107,7 @@ def main(args):
 
     elif args.agent=='ac_att':
         exp_config['att_head']=args.att_head
-        exp_config['hid_size']=64
+        exp_config['hid_size']=args.hid_size
     # elif args.agent in ['tiecomm','tiecomm_g','tiecomm_random','tiecomm_default']:
     #     exp_config['interval']= agent_config['group_interval']
     else:
@@ -208,6 +208,7 @@ if __name__ == '__main__':
     parser.add_argument('--n_processes', type=int, default=6, help='number of processes')
 
     parser.add_argument('--att_head', type=int, default=1, help='number of attention heads')
+    parser.add_argument('--hid_size', type=int, default=72, help='hidden size')
 
     args = parser.parse_args()
 
