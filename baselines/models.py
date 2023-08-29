@@ -90,28 +90,28 @@ class Attention_Noise(nn.Module):
         self.head = nn.Linear(self.hid_size, self.n_actions)
         self.value_head = nn.Linear(self.hid_size, 1)
 
-    def forward(self, x, info={}):
-        x = self.tanh(self.affine1(x)).unsqueeze(0)
-        noise = torch.randn_like(x)
-        xnoise = torch.cat([x, noise], dim=1)
-        h, _ = self.attn(xnoise, xnoise, xnoise)
-        xh = torch.cat([x.squeeze(0), h.squeeze(0)[:x.shape[1]]], dim=-1)
-        z = self.tanh(self.affine2(xh))
-        a = F.log_softmax(self.head(z), dim=-1)
-        v = self.value_head(z)
-        return a, v
-
     # def forward(self, x, info={}):
     #     x = self.tanh(self.affine1(x)).unsqueeze(0)
-    #     noise1 = torch.randn_like(x)
-    #     noise2 = torch.randn_like(x)
-    #     xnoises = torch.cat([x, noise1, noise2], dim=1)
-    #     h, _ = self.attn(xnoises, xnoises, xnoises)
+    #     noise = torch.randn_like(x)
+    #     xnoise = torch.cat([x, noise], dim=1)
+    #     h, _ = self.attn(xnoise, xnoise, xnoise)
     #     xh = torch.cat([x.squeeze(0), h.squeeze(0)[:x.shape[1]]], dim=-1)
     #     z = self.tanh(self.affine2(xh))
     #     a = F.log_softmax(self.head(z), dim=-1)
     #     v = self.value_head(z)
     #     return a, v
+
+    def forward(self, x, info={}):
+        x = self.tanh(self.affine1(x)).unsqueeze(0)
+        noise1 = torch.randn_like(x)
+        noise2 = torch.randn_like(x)
+        xnoises = torch.cat([x, noise1, noise2], dim=1)
+        h, _ = self.attn(xnoises, xnoises, xnoises)
+        xh = torch.cat([x.squeeze(0), h.squeeze(0)[:x.shape[1]]], dim=-1)
+        z = self.tanh(self.affine2(xh))
+        a = F.log_softmax(self.head(z), dim=-1)
+        v = self.value_head(z)
+        return a, v
 
 
 class GNN(nn.Module):
