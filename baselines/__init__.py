@@ -4,7 +4,7 @@ from .commnet import CommNetAgent
 from .tarmac import TarCommAgent
 from .magic import MAGICAgent
 # from .gacomm import GACommAgent
-from .models import MLP, Attention,GNN
+from .models import MLP, Attention,GNN, Attention_Noise
 
 
 REGISTRY = {}
@@ -27,6 +27,8 @@ REGISTRY["magic"] = MAGICAgent
 
 REGISTRY["ac_mlp"] = MLP
 REGISTRY["ac_att"] = Attention
+REGISTRY["ac_att_noise"] = Attention_Noise
+
 REGISTRY["gnn"] = GNN
 
 

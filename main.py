@@ -105,7 +105,7 @@ def main(args):
         exp_config['hid_size']=64
         exp_config['detach_gap'] = 10
 
-    elif args.agent=='ac_att':
+    elif args.agent in ['ac_att', 'ac_att_noise']:
         exp_config['att_head']=args.att_head
         exp_config['hid_size']=args.hid_size
     # elif args.agent in ['tiecomm','tiecomm_g','tiecomm_random','tiecomm_default']:
@@ -190,15 +190,15 @@ def main(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='TieComm')
+    parser = argparse.ArgumentParser(description='HierComm')
     parser.add_argument('--memo', type=str, default="JAMMAS", help='memo name')
     parser.add_argument('--env', type=str, default="mpe", help='environment name',
                         choices=['mpe','lbf','rware','tj'])
     parser.add_argument('--map', type=str, default="mpe-large-spread-v1", help='environment map name',
                         choices=['easy','medium','hard','mpe-large-spread-v2','mpe-large-spread-v1','Foraging-easy-v0','Foraging-medium-v0','Foraging-hard-v0'])
     parser.add_argument('--time_limit', type=int, default=50, help='time limit')
-    parser.add_argument('--agent', type=str, default="ac_mlp", help='algorithm name',
-                        choices=['tiecomm','tiecomm_wo_inter','tiecomm_wo_intra','tiecomm_default','ac_att','ac_mlp','gnn','commnet','ic3net','tarmac','magic'])
+    parser.add_argument('--agent', type=str, default="ac_att_noise", help='algorithm name',
+                        choices=['tiecomm','tiecomm_wo_inter','tiecomm_wo_intra','tiecomm_default','ac_att','ac_att_noise','ac_mlp','gnn','commnet','ic3net','tarmac','magic'])
     # parser.add_argument('--block', type=str, default='no',choices=['no','inter','intra'], help='only works for tiecomm')
     parser.add_argument('--seed', type=int, default=1234, help='random seed')
     parser.add_argument('--use_offline_wandb', action='store_true', help='use offline wandb')

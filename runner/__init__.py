@@ -21,6 +21,7 @@ from .runner_hiercomm import RunnerHiercomm
 REGISTRY = {}
 REGISTRY["ac_mlp"] = Runner
 REGISTRY["ac_att"] = Runner
+REGISTRY["ac_att_noise"] = Runner
 REGISTRY["gnn"] = RunnerGNN
 
 REGISTRY["tiecomm"] = RunnerTiecomm
